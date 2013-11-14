@@ -1,0 +1,98 @@
+     1	0a1,2
+     2	> #!/usr/bin/python
+     3	> 
+     4	19c21,28
+     5	< 
+     6	---
+     7	>     def depth(self):
+     8	>         n = 0
+     9	>         x = self.outer
+    10	>         while x:
+    11	>             n += 1
+    12	>             x = x.outer
+    13	>         return n
+    14	>         
+    15	25c34,35
+    16	<      {'+':op.add, '-':op.sub, '*':op.mul, '/':op.div, 'not':op.not_,
+    17	---
+    18	>      {'say': lambda x: say(x), 'quit' : goodbye,
+    19	>       '+':op.add, '-':op.sub, '*':op.mul, '/':op.div, 'not':op.not_,
+    20	32a43,45
+    21	> def say(x): print x
+    22	> def goodbye(): print ";; Bye."; quit()
+    23	> 
+    24	39c52
+    25	< def eval(x, env=global_env):
+    26	---
+    27	> def eval(x, env=global_env,lvl=0):
+    28	40a54,55
+    29	>     this = x[0] if isa(x,list) else x
+    30	>     print "|.. " * lvl + str(this)
+    31	45c60,63
+    32	<     elif x[0] == 'quote':          # (quote exp)
+    33	---
+    34	>     elif x[0] == 'load':
+    35	>       tmp=eval(x[1],env,lvl+1)
+    36	>       return eload(tmp)
+    37	>     elif  x[0] == 'quote' or  x[0] == "'":
+    38	50c68
+    39	<         return eval((conseq if eval(test, env) else alt), env)
+    40	---
+    41	>         return eval((conseq if eval(test, env) else alt), env,lvl+1)
+    42	53c71
+    43	<         env.find(var)[var] = eval(exp, env)
+    44	---
+    45	>         env.find(var)[var] = eval(exp, env,lvl+1)
+    46	56c74
+    47	<         env[var] = eval(exp, env)
+    48	---
+    49	>         env[var] = eval(exp, env,lvl+1)
+    50	59c77
+    51	<         return lambda *args: eval(exp, Env(vars, args, env))
+    52	---
+    53	>         return lambda *args: eval(exp, Env(vars, args, env),lvl+1)
+    54	62c80
+    55	<             val = eval(exp, env)
+    56	---
+    57	>             val = eval(exp, env,lvl+1)
+    58	65c83
+    59	<         exps = [eval(exp, env) for exp in x]
+    60	---
+    61	>         exps = [eval(exp, env,lvl+1) for exp in x]
+    62	66a85
+    63	>         #print ">calling", proc
+    64	110a130
+    65	>     print ";; LITHP ITH LITHTENING ...(v0.1)"
+    66	113a134,165
+    67	> 
+    68	> import string
+    69	> def sexp(s) :
+    70	>   level,keep = 0,""
+    71	>   while s:
+    72	>     if s[0] == ";":
+    73	>       while s and s[0] != "\n": s=s[1:]
+    74	>       if not s: break
+    75	>     if s[0] == "(": level += 1
+    76	>     if level > 0  : keep += s[0]
+    77	>     if s[0] == ")":  
+    78	>       level -= 1
+    79	>       if level==0:
+    80	>         yield keep
+    81	>         keep=""
+    82	>     s = s[1:]
+    83	>   if keep:
+    84	>     yield keep
+    85	> 
+    86	> 
+    87	> def eload(f) :
+    88	>   with open(f) as contents:
+    89	>     code = contents.read()
+    90	>   for part in  sexp(code):
+    91	>     eval(parse(part))
+    92	> 
+    93	> import sys
+    94	> if len(sys.argv) > 1:
+    95	>   eload(sys.argv[1])
+    96	> else:
+    97	>   repl()
+    98	>   quit()

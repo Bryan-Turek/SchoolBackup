@@ -1,0 +1,48 @@
+address (inside segment) + segment register = "real" address
+	20 bits of data (0-19)
+
+Q: 	if address = 1234)16
+	+ cs = 7000)16
+
+	what is the real address? 
+
+A: 	Addr = 1234;
+	CS = 7000;
+
+	real address = 71234;
+
+##########################
+
+Addr = 1234;
+CS =   7F2A;
+Real Address = 84D4;
+
+0 = 0;
+1 = 1;
+2 = 2;
+3 = 3; 
+4 = 4;
+5 = 5;
+6 = 6;
+7=7;
+8=8;
+9=9;
+10=A;
+11=B;
+ETC;
+  
+#########################
+  
+Addr = 678A;
+CS =   A000;
+Real Address = A678A;
+
+Addr = 678A;
+CS =   E444;
+Real Address = EABCA;
+
+########################
+
+IP = Instruction Pointer;
+  It contains the address of the next instruction.
+  

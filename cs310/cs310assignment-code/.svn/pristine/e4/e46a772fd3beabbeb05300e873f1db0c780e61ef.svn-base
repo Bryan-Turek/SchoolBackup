@@ -1,0 +1,52 @@
+#EGGS HAS NO OUT-GOING EDGE
+# stage text
+!Start
+You are ready to make breakfast. Pick an ingredient:
+> Eggs Eggs
+> Bacon Bacon
+> Pancakes Pancakes
+
+Eggs
+You pick up a white egg:
+
+Bacon
+You pick up a few raw strips of bacon.
+> Fry Fry the bacon
+> Eat Eat your breakfast
+
+Pancakes
+You pick up some dry pancake mix
+> Mix Mix with other ingredients
+> Cook Cook
+> Syrup Add syrup
+> Eat Eat your breakfast
+
+Crack
+You crack the egg open, and pour the yolk into a bowl.
+> Fry Fry the eggs
+> Eat Eat your breakfast
+
+Fry
+You fry the food till it is done.
+> Eat Eat your breakfast
+> Start Cook more food
+
+Mix
+You mix the dry pancake mix with the wet ingredients, creating pancake batter.
+> Cook Cook the batter
+> Eat Eat your breakfast
+
+Cook
+You pour the pancake batter into a skillet and cook until you have golden pancakes.
+> Eat Eat your breakfast
+> Start Cook more food
+
+Syrup
+You pour syrup over the added food. Now what?
+> Start Make more food
+> Eat Eat what is on your plate
+       
+Eat
+You eat what is on your plate
+I hope you enjoyed your plate of
+exit

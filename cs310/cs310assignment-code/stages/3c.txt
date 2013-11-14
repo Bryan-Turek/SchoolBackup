@@ -1,0 +1,47 @@
+# Cant reach back
+# stage text
+!Begin
+You have made it to the heart.
+> Atrium Enter the right atrium
+
+Atrium
+You have entered the right atrium.
+> Ventricle Enter the right ventricle
+
+Ventricle
+You have entered the right ventricle
+> Valve Go through the pulmonary valve
+
+Valve
+You have passed through the pulmonary valve
+> Artery Go through the pulmonary artery
+
+Artery
+You have gone through the pulmonary artery
+> Lung Enter the Lung
+
+Lung
+You take a page from Thoreau and go live in the woods.
+> LeftA Go through the left atrium
+
+LeftA
+You have gone through the left atrium
+> LeftV Go through the left ventricle
+
+LeftA
+You have gone through the left ventricle
+> AorticV Go through the aortic valve
+
+AorticV
+You have gone through the aortic valve
+> Body Go to the rest of the body
+       
+Body
+You have gone through the body. Go blood cell!
+> Quit    
+
+Back    
+You went back. RIP
+> Quit    
+    
+

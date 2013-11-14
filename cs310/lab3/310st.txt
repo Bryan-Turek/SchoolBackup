@@ -1,0 +1,18 @@
+Birth
+You have entered the world
+Big ain't it?
+> Home Go home with a family
+> Cats Flee the hospital to live with cats
+
+#somewhere to go
+Home
+You have chosen to go live with your family.
+Nice people
+> Job Get a job
+> School Go to school
+> Woods Go live in the woods
+
+##################
+Wood
+> Starve cat no food
+> Die death now

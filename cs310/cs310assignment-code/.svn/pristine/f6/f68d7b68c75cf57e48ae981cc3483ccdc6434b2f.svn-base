@@ -1,0 +1,59 @@
+# Start node has incoming edge
+# stage text
+
+> Begin You are Created
+
+!Begin
+You have made it to the heart.
+> Atrium Enter the right atrium
+> Back Go back
+
+Atrium
+You have entered the right atrium.
+> Ventricle Enter the right ventricle
+> Back Go back
+
+Ventricle
+You have entered the right ventricle
+> Valve Go through the pulmonary valve
+> Back Go back
+
+Valve
+You have passed through the pulmonary valve
+> Artery Go through the pulmonary artery
+> Back Go back
+
+Artery
+You have gone through the pulmonary artery
+> Lung Enter the Lung
+> Back Go back
+
+Lung
+You take a page from Thoreau and go live in the woods.
+> LeftA Go through the left atrium
+> Back Go back
+
+LeftA
+You have gone through the left atrium
+> LeftV Go through the left ventricle
+> Back Go back
+
+LeftA
+You have gone through the left ventricle
+> AorticV Go through the aortic valve
+> Back Go back
+
+AorticV
+You have gone through the aortic valve
+> Body Go to the rest of the body
+> Back Go back
+       
+Body
+You have gone through the body. Go blood cell!
+> Quit    
+
+Peddler    
+You went back. RIP
+> Quit    
+    
+

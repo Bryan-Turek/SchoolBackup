@@ -1,0 +1,121 @@
+#!/usr/bin/env python
+
+'''
+Cooking Simulator 5000
+'''
+gothrough=0
+character = {'inventory': [], 'cooking_step': 'Start'}
+choice = {
+    'Start': {
+        'description': 'You are ready to make breakfast. Pick an ingredient:',
+        'options': '1) Eggs\n2) Bacon\n3) Pancakes',
+        'exits': {'1':'one', '2':'two', '3':'three'},
+	'contents':[],
+	'preq':[],
+    },
+    'one': {
+        'description': 'You pick up a white egg?',
+        'options': '1) Crack the egg\n2) Fry the egg\n3) Eat your breakfast',
+        'exits': {'1':'four', '2':'five' , '3':'nine'},
+	'contents':['White egg'],
+	'preq':[]
+    },
+    'two': {
+        'description': 'You pick up a few raw strips of bacon.',
+        'options': '1) Fry the bacon\n2) Eat your breakfast',
+        'exits': {'1':'five', '2':'nine'},
+	'contents':['Raw bacon'],
+	'preq':[]
+    },
+    'three': {
+        'description': 'You pick up some dry pancake mix.',
+        'options': '1) Mix with other ingredients\n2) Cook\n3) Add syrup\n4) Eat your breakfast',
+        'exits': {'1':'six', '2':'seven', '3':'eight', '4':'nine'},
+	'contents':['Dry pancake mix'],
+	'preq':[]
+    },
+    'four': {
+        'description': 'You crack the egg open, and pour the yolk into a bowl.',
+        'options': '1) Fry the egg\n2) Eat your breakfast',
+        'exits': {'1':'five', '2':'nine'},
+	'contents':['Egg yolk'],
+	'preq':['White egg']
+    },
+    'five': {
+        'description': 'You fry the food until it is done.',
+        'options': '1) Eat your breakfast\n2) Cook more food',
+        'exits': {'1':'nine', '2':'Start'},
+	'contents':['Fried egg', 'Cooked bacon', 'Brown egg'],
+	'preq':['Egg yolk', 'Raw bacon', 'White egg']
+    },
+    'six': {
+        'description': 'You mix the dry pancake mix with the wet ingredients, creating pancake batter.',
+        'options': '1) Cook the batter\n2) Eat your breakfast',
+        'exits': {'1':'seven', '2':'nine'},
+	'contents':['Wet pancake batter'],
+	'preq':['Dry pancake mix']
+    },
+    'seven': {
+        'description': 'You pour the pancake batter into a skillet and cook until you have golden pancakes.',
+        'options': '1) Eat your breakfast\n2) Cook more food',
+        'exits': {'1':'nine', '2':'Start'},
+	'contents':['Pancakes'],
+	'preq':['Dry pancake mix', 'Wet pancake batter']
+    },
+    'eight': {
+        'description': 'You pour syrup over the added food. Now what?',
+        'options': '1) Make more food\n2) Eat what is on your plate',
+        'exits': {'1':'Start', '2':'nine'},
+	'contents':['Syrup'],
+	'preq':[]
+    },
+    'nine': {
+        'description': 'You eat what is on your plate',
+        'options': 'I hope you enjoyed your plate of '+str(character['inventory'])+'!',
+        'exits': {'1':'nine'},
+	'contents':[],
+	'preq':[]
+    }
+}
+while True:
+    next = choice[character['cooking_step']]
+    command = raw_input(next['description'] + ' Now what? > ')
+    command_parts = command.split(None, 1)
+    next_stage = command_parts[0]
+    if next_stage in ['1', '2', '3', '4', '5']:
+        if next_stage in next['exits']:
+		
+	    if not next['preq']:
+		if next['contents']:
+			character['inventory'].append(next['contents'])
+			print 'preq empty'
+			print character['inventory']
+	    inv = character['inventory']
+	    pos = 0
+	    if next['preq']:
+		if len(next['preq'])==1:
+			del character['inventory'][-1]
+			character['inventory'].append(next['contents'])
+		else:
+			print next['preq']
+			n = 0
+			while n < len(next['preq']):
+				if character['inventory'][-1][-1]==next['preq'][n]:
+					print 'eq!'
+					print next['preq'][n]
+					break
+				n+=1
+			del character['inventory'][-1]
+			character['inventory'].append(next['contents'][n])
+            character['cooking_step'] = next['exits'][next_stage]
+            next = choice[character['cooking_step']]
+        else:
+            print 'You cannot do that. Enter "o" for options.'
+    elif next_stage not in ['o', 'quit', 'exit', 'stop']:
+            print 'You cannot do that. Enter "o" for options.'
+    if next_stage == 'o':
+	print next['options']
+    if next_stage in ['quit', 'exit', 'stop']:
+        print 'Goodbye'
+	print 'I hope you enjoyed your '+str(character['inventory'][-1][-1])
+        break

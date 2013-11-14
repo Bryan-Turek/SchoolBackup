@@ -1,0 +1,64 @@
+#!/usr/bin/python
+
+from go import *
+
+def mylist(lst):
+    now = 0
+    stop = len(lst)
+    while now < stop:
+        yield lst[now]
+	now += 1
+
+@go
+def _mylist() :
+   for i in ["aa","bb","cc"]:
+      print i
+   for i in mylist(["aa","bb","cc"]):
+      print i
+      
+def f1(n) :
+   return n if n < 2 else f1(n-2) + f1(n-1)
+
+#@go
+def _f1() : print 10, f1(10)
+
+def f(n):
+    a, b = 0, 1
+    for i in range(0, n):
+        a, b = b, a + b
+    return a
+
+#@go
+def _f(): print 33,f(33)
+
+def args(*args):
+   print args
+
+
+# prints a tuble:
+#  and immutable list (can't change values, can access by index)
+#@go
+def _args() : print args(1,2,3,4,5)
+
+def memo(f):
+    memo = {}
+    def wrapper(*args):
+       if args in memo:
+            return memo[args]
+       else:
+            tmp = f(*args)
+	    memo[args] = tmp
+	    return tmp
+    return wrapper
+
+@memo
+def f2(n) :
+    return n if n < 2 else f2(n-2) + f2(n-1)
+  
+#@go
+def _f2() : print 320,f2(320)
+
+from sys import argv
+if len(argv)> 1:
+	n = int(argv[1])
+	print n, f1(n)
