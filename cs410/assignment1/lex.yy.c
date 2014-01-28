@@ -476,7 +476,7 @@ char *yytext;
 
 typedef struct {
   int id, hn, age, month, someNeighbors, noNeighbors;
-  char pbp[50], prof[50], rel[50];
+  char pbp[50], emp[50], prof[50], rel[50];
 } Person;
 
 typedef struct {
@@ -490,7 +490,7 @@ int isRailRoadWorker(Person *person);
 
 Person person;
 Places places;
-Person *people;
+Person people[100];
 int count = 0, placeCount = 0;
 int value = 0;
 
@@ -788,54 +788,77 @@ YY_RULE_SETUP
 #line 48 "lex2.l"
 {
                       switch(value) {
+                        case 26:
+                          strcpy(person.prof, (char *) yytext);
+                          break;
+                        case 25:
+                          strcpy(person.emp, (char *) yytext);
+                          break;
                         case 18:
-                          strcpy(person.pbp, yytext);
+                          strcpy(person.pbp, (char *) yytext);
                           recordPlace(yytext, &places);
+                          break;
                         case 5:
-                          strcpy(person.rel, yytext);
+                          strcpy(person.rel, (char *) yytext);
+                          break;
                       }
+                      BEGIN(VALUE);
                    }
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 57 "lex2.l"
+#line 66 "lex2.l"
 {
                       switch(value) {
-                        case 0:   person.hn = atoi(yytext);
-                        case 10:  person.age = atoi(yytext);
+                        case 0:   
+                          person.hn = atoi(yytext);
+                          break;
+                        case 10:  
+                          person.age = atoi(yytext);
+                          break;
                       }
+                      BEGIN(VALUE);
                    }
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 63 "lex2.l"
-;
+#line 77 "lex2.l"
+BEGIN(VALUE);
 	YY_BREAK
 case 6:
 *yy_cp = (yy_hold_char); /* undo effects of setting up yytext */
 (yy_c_buf_p) = yy_cp = yy_bp + 1;
 YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 64 "lex2.l"
-person.age = atoi(yytext);
+#line 78 "lex2.l"
+{
+                      person.age = atoi(yytext);
+                      BEGIN(VALUE);
+                    }
 	YY_BREAK
 case 7:
 *yy_cp = (yy_hold_char); /* undo effects of setting up yytext */
 (yy_c_buf_p) = yy_cp -= 3;
 YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 65 "lex2.l"
-person.month = atoi(yytext);
+#line 82 "lex2.l"
+{
+                      person.month = atoi(yytext);
+                      BEGIN(VALUE);
+                    }
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 66 "lex2.l"
-{value++;}
+#line 86 "lex2.l"
+{
+                      value++;
+                      BEGIN(VALUE);
+                    }
 	YY_BREAK
 case 9:
 /* rule 9 can match eol */
 YY_RULE_SETUP
-#line 67 "lex2.l"
+#line 90 "lex2.l"
 {
                       value = 0;
                       people[count] = person;
@@ -845,15 +868,15 @@ YY_RULE_SETUP
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 73 "lex2.l"
+#line 96 "lex2.l"
 ;
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 75 "lex2.l"
+#line 98 "lex2.l"
 ECHO;
 	YY_BREAK
-#line 857 "lex.yy.c"
+#line 880 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 case YY_STATE_EOF(VALUE):
 	yyterminate();
@@ -1852,7 +1875,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 75 "lex2.l"
+#line 98 "lex2.l"
 
 
 
@@ -1864,15 +1887,17 @@ main() {
   for(i=2; i<=count; i++) {
     Person current = people[i];
     if(current.age < 5) months[(current.age*12)+(current.month)]++;
-    if(strcmp(current.rel, "wife") == 0) empWives++;
-    printf("%s\n", current.rel);
+    if(strcmp(current.rel, "wife") == 0 && strcmp(current.emp, "None") != 0) empWives++;
     if(isRailRoadWorker(&current) && (strcmp(current.rel, "head") == 0)) {
-      printf("hit");
       for(j=2; j<=count; j++) {
-        if(isRailRoadWorker(&people[j]) && current.hn > 0 && (current.hn-4 <= people[j].hn <= current.hn+4) && strcmp(people[j].rel, "head") == 0) current.someNeighbors++;
-        if(!isRailRoadWorker(&people[j]) && current.hn > 0 && (current.hn-4 <= people[j].hn <= current.hn+4) && strcmp(people[j].rel, "head") == 0) current.noNeighbors++;
+        if(isRailRoadWorker(&people[j]) && current.hn > 0 && (current.hn-4 <= people[j].hn <= current.hn+4) && strcmp(people[j].rel, "head") == 0) {
+          current.someNeighbors++;
+          break;
+        } else if(!isRailRoadWorker(&people[j]) && current.hn > 0 && (current.hn-4 <= people[j].hn <= current.hn+4) && strcmp(people[j].rel, "head") == 0) {
+          current.noNeighbors++;
+          break;
+        }
       }
-      printf("%d %d \n", current.someNeighbors, current.noNeighbors);
     }
   }
 
